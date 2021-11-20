@@ -40,6 +40,24 @@ exports.signup = (req, res) => {
         });
 };
 
+
+exports.get = (req, res) => {
+    User.findOne({
+        where: {
+            username: req.body.username
+        }
+    }).then(user => {
+        if (user) {
+            res.status(200).send({
+                id: user.id,
+                username: user.username,
+                email: user.email
+            });
+        }
+    })
+}
+
+
 exports.signin = (req, res) => {
     User.findOne({
             where: {
@@ -49,7 +67,7 @@ exports.signin = (req, res) => {
         .then(user => {
             if (!user) {
                 console.log("caiu aqui")
-                return res.status(404).send({ message: "User Not found." });
+                return res.status(404).send({ id: "User Not found." });
 
             }
 
